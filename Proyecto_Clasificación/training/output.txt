@@ -1,0 +1,34 @@
+Output del entrenamiento para clasificación
+
+1. Especificaciones de entrenamiento:
+    * Dada la naturaleza del llenado de los registros, no es necesario hacer limpieza de datos
+    * Se excluyen variables no aportantes como el ID y la variable Demand el cual también es una variable objetivo del modelo de regersión
+    * El entrenamiento se lleva a cabo por medio de un pipeline que contiene preprocesamiento de las variables categoricas y numéricas, luego
+      entrenamiento de cada uno de los modelos evaluados
+    * Entre todas las iteraciones, se encuentra pertinente hacer reducción de dimensionalidad, por lo que se analiza y se emplea en el modelo
+    * Tanto para el entrenamiento como en la selección de los datos para validación y test se tiene en cuenta que las clases están desbalanceadas 
+      en una relación aproximada de 3:1
+    * Para el test se toma el 20% de los datos teniendo en cuenta la clase estratificada a razón del desbalance
+    * Para la validación se usa ShuffleSplit estratificado
+    * Los modelos usados son RandomForest, SVC y XGBOOST con variaciones de hiperparámetros para encontrar la mejor combinación
+    * Se usa f1 como scorer para evaluación del modelo en su entrenamiento, adecaudo con average='macro' con el propósito de tener en cuenta la 
+      clase minoritaria
+    * De los 3 modelos ajustados en sus óptimos se selecciona XGBOOST por que ofrece el mejor balance en ambas clases, teniendo en cuenta que la clase minoritaria
+      tuvo muchas dificultades de lograr un resultado aceptable en la matriz de confusión normalizada
+
+2. Métricas generadas por el modelo con los datos del test:
+    * xgboost BACC: 0.7322
+    * Mejores hiperparámetros: {'classifier__colsample_bytree': 1.0, 
+                                'classifier__gamma': 0, 
+                                'classifier__learning_rate': 0.01, 
+                                'classifier__max_depth': 7, 
+                                'classifier__n_estimators': 100, 
+                                'classifier__reg_alpha': 0, 
+                                'classifier__reg_lambda': 1, 
+                                'classifier__scale_pos_weight': np.float64(2.768561872909699), 
+                                'classifier__subsample': 0.7}
+
+
+
+
+
